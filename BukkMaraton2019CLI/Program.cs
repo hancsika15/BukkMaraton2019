@@ -1,22 +1,21 @@
-﻿internal class Program
-{
-    private static void Main(string[] args)
-    {
-        List<Versenyzo> resztvevok = [];
-        using StreamReader sr = new("C:\\Users\\72581493312\\source\\repos\\BukkMaraton2019\\BukkMaraton2019CLI\\Source\\bukkm2019.txt");
+﻿using System.Text;
 
-        _ = sr.ReadLine();
-        while (!sr.EndOfStream) {
+const int IndulokSzama = 691;
 
-            var line = sr.ReadLine().Split(';');
-            resztvevok.Add(new(
-                rajtszam: line[0],
-                kategoria: line[1],
-                nev: line[2],
-                egyesulet: line[3],
-                ido: TimeSpan.ParseExact(line[4],"h:mm:ss", null)
-            ));
-            Console.WriteLine(resztvevok[^1]);
-        }
-    }
-}
+List<Versenyzo> versenyzok = [];
+using StreamReader sr = new("..\\..\\..\\Source\\bukkm2019.txt", Encoding.UTF8);
+
+_ = sr.ReadLine();
+while (!sr.EndOfStream) versenyzok.Add(new(sr.ReadLine()));
+
+
+Console.WriteLine($"4. feladat: Versenytávot nem teljesítők: " +
+    $"{ 100- versenyzok.Count / (float)IndulokSzama * 100:0.00}%");
+
+
+var f5 = versenyzok.Count(v => v.Tav == "Rövid" && v.Kategoria[^1] == 'n');
+Console.WriteLine($"5. feladat: Női versenyzők száma a rövid távú versenyen: {f5}fő");
+
+bool f6 = versenyzok.Any(v => v.Ido.TotalHours > 6);
+Console.WriteLine(
+    $"6. feladat: {(f6 ? "Volt ilyen versenyző" : "Nem volt ilyen versenyző")}");
