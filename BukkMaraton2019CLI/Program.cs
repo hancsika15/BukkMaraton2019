@@ -19,3 +19,10 @@ Console.WriteLine($"5. feladat: Női versenyzők száma a rövid távú versenye
 bool f6 = versenyzok.Any(v => v.Ido.TotalHours > 6);
 Console.WriteLine(
     $"6. feladat: {(f6 ? "Volt ilyen versenyző" : "Nem volt ilyen versenyző")}");
+
+
+Versenyzo f7 = versenyzok
+    .Where(v => v.Tav == "Rövid" && v.Kategoria == "ff")
+    .MinBy(v => v.Ido);
+
+Console.WriteLine($"7.feladat: A felnőtt férfi (ff) kaegoria győzteste rövid távon\n {f7}");
